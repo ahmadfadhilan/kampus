@@ -53,6 +53,7 @@
                             @endif
                         @else
                             <a class="nav-link" href="{{ route('mahasiswa.index') }}">{{ __('Daftar Mahasiswa') }}</a>
+                            <a class="nav-link" href="{{ route('mahasiswas.index') }}">{{ __('Daftar Mahasiswa1') }}</a>
                             <li class="nav-item dropdown">
                                 <a id="navbarDropdown" class="nav-link dropdown-toggle" href="#" role="button" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false" v-pre>
                                     {{ Auth::user()->name }} <span class="caret"></span>

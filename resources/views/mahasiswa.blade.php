@@ -10,6 +10,7 @@
                 </div>
                 <div class="card-body">
                   Daftar Jumlah Mahasiwa:
+                  <button type="button" name="button" id="getRequest">GetRequest</button>
                     @if (session('status'))
                         <div class="alert alert-success" role="alert">
                             {{ session('status') }}
@@ -44,6 +45,24 @@
                     </table>
                     <?php  }?>
 
+                    <div class="row col-lg-5">
+                      <h2>Register Form</h2>
+                      <form id="register">
+                        <label for="firstname"></label>
+                        <input type="text" id="firstname" class="form-control">
+
+                        <label for="lastname"></label>
+                        <input type="text" id="lastname" class="form-control">
+
+                        <input type="submit" class="btn btn-primary" value="Register">
+
+                      </form>
+
+                    </div>
+
+                    <div id="getRequestData">
+
+                    </div>
                 </div>
             </div>
         </div>
@@ -51,6 +70,16 @@
 </div>
 
 <script src="http://ajax.googleapis.com/ajax/libs/jquery/1.9.1/jquery.min.js">  </script>
+<script type="text/javascript">
+$(document).ready(function(){
+  $('#getRequest').click(function(){
+    $.get('getRequest',function(data){
+      $('#getRequestData').append(data);
+      console.log(data);
+    });
+  });
+});
+</script>
 <!-- <script>
   $('form.ajax').on('submit',function(){
     var that = $(this),

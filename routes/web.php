@@ -23,4 +23,14 @@ Route::resource('mahasiswa','mahasiswaController');
 
 Route::post('mahasiswa', 'mahasiswaController@index');
 
+Route::resource('mahasiswas','mahasiswasController');
+
+Route::post('mahasiswas', 'mahasiswasController@index');
+
 Route::get('excel','mahasiswaController@export')->name('mahasiswa.excel');
+
+Route::get('/getRequest',function(){
+  if(Request::ajax()){
+    return 'getRequest has loaded completely';
+  }
+});

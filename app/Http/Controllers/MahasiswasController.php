@@ -3,12 +3,10 @@
 namespace App\Http\Controllers;
 
 use Illuminate\Http\Request;
+use App\JalurMasuk;
 use DB;
-use Excel;
-use App\Exports\UsersExport;
-use App\Mahasiswa;
 
-class MahasiswaController extends Controller
+class MahasiswasController extends Controller
 {
     /**
      * Display a listing of the resource.
@@ -17,28 +15,13 @@ class MahasiswaController extends Controller
      */
     public function index()
     {
-      $tahun = 2000;
-      $sem=1;
-      for ($a=2;$sem<=$a;$sem++){
-        for ($x=2017;$tahun<=$x;$tahun++){
-          $siskom = DB::connection('mysql2')->select("SELECT count(mhsNiu) AS jumlah FROM mahasiswa WHERE mhsProdiKode IN ('421','422')
-          AND EXISTS (SELECT mhsregMhsNiu FROM mahasiswa_registrasi WHERE mahasiswa.mhsNiu=mahasiswa_registrasi.mhsregMhsNiu AND mhsregSemId=$tahun$sem)");
-          $si = DB::connection('mysql2')->select("SELECT count(mhsNiu) AS jumlah FROM mahasiswa WHERE mhsProdiKode IN ('83','84')
-          AND EXISTS (SELECT mhsregMhsNiu FROM mahasiswa_registrasi WHERE mahasiswa.mhsNiu=mahasiswa_registrasi.mhsregMhsNiu AND mhsregSemId=$tahun$sem)");
-          $y[$tahun]=$siskom;
-          $z[$tahun]=$si;
+        $jalur = JalurMasuk::all()->pluck('jllrNama', 'jllrKode');
+        if(isset($_POST['jlrmsk'])){
+          $jlrmsk=$_POST['jlrmsk'];
+        $query = DB::connection('mysql2')->select("SELECT mhsNiu,mhsNama,mhsProdiKode,s_jalur_ref.jllrNama FROM mahasiswa
+        JOIN s_jalur_ref ON s_jalur_ref.jllrKode=mahasiswa.mhsJlrrKode WHERE mhsJlrrKode='$jlrmsk'");
         }
-        $b[$sem]=$y;
-        $c[$sem]=$z;
-      }
-
-      return view('mahasiswa', compact('b','c'));
-    }
-
-    public function export()
-    {
-        return Excel::download(new UsersExport, 'users.xlsx');
-        //return Mahasiswa::all();
+        return view('mahasiswas',compact('jalur','query','jlrmsk'));
     }
 
     /**
